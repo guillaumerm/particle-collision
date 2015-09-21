@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Controleur.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;TP2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">controleur</a> &gt; <span class="el_source">Controleur.java</span></div><h1>Controleur.java</h1><pre class="source lang-java linenums">/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package controleur;
+
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import static javafx.scene.input.KeyCode.V;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
+import javafx.stage.Stage;
+import modele.Particule;
+import modele.ParticuleException;
+
+/**
+ *
+ * @author 1141678
+ */
+<span class="nc" id="L42">public class Controleur extends Application implements Initializable{</span>
+    
+    @FXML
+    public BorderPane root; 
+    @FXML
+    public Pane pane;
+    @FXML
+    public ColorPicker choixCouleur;
+    @FXML
+    public Slider rayon;
+    @FXML
+    public TextField nombres;
+    @FXML
+    public Slider vitesse;
+    @FXML
+    public Slider angle;
+
+    private ArrayList&lt;Particule&gt; particules;
+    private ArrayList&lt;Node&gt; particulesVue;
+    private int compteur;
+    
+     @Override
+    public void start(Stage stage) throws Exception {
+<span class="nc" id="L65">        Parent root = FXMLLoader.load(getClass().getResource(&quot;/vue/tp2.fxml&quot;));</span>
+        
+<span class="nc" id="L67">        Scene scene = new Scene(root);</span>
+        //scene.getStylesheets().add(&quot;ressources/css/style.css&quot;);
+<span class="nc" id="L69">        stage.setScene(scene);</span>
+<span class="nc" id="L70">        stage.show();</span>
+<span class="nc" id="L71">    }</span>
+
+     @FXML
+    private void handleButtonAction(ActionEvent event) {
+<span class="nc bnc" id="L75" title="All 2 branches missed.">        if (((Button) event.getSource()).getText().equals(&quot;Quitter&quot;)) {</span>
+<span class="nc" id="L76">            Platform.exit();</span>
+        }
+<span class="nc bnc" id="L78" title="All 2 branches missed.">        else if (((Button) event.getSource()).getText().equals(&quot;Réinitialiser&quot;)) {</span>
+<span class="nc" id="L79">            reinitialiser();</span>
+        }
+        else {
+<span class="nc" id="L82">            ajouteBalle();</span>
+        }
+<span class="nc" id="L84">    }</span>
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+<span class="nc" id="L89">        particules = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L90">        particulesVue = new ArrayList&lt;&gt;();</span>
+        
+<span class="nc" id="L92">        pane.setOnMouseClicked(new EventHandler&lt;MouseEvent&gt;(){</span>
+
+            @Override
+            public void handle(MouseEvent event) {
+<span class="nc" id="L96">                ajouteBalle(event.getX(), event.getY());</span>
+<span class="nc" id="L97">            }</span>
+        });
+<span class="nc" id="L99">    }    </span>
+    
+ @FXML
+    private void ajouteBalle() {
+        try {
+<span class="nc" id="L104">            Particule particule = new Particule(vitesse.getValue(), angle.getValue(), rayon.getValue(), 100, 100, choixCouleur.getValue().toString());</span>
+<span class="nc" id="L105">            compteur++;</span>
+<span class="nc" id="L106">            nombres.setText(Integer.toString(compteur));</span>
+            
+<span class="nc" id="L108">            particules.add(particule);</span>
+            
+<span class="nc" id="L110">            Shape formeCourante = new Ellipse(rayon.getValue(), rayon.getValue());</span>
+<span class="nc" id="L111">            formeCourante.setFill(choixCouleur.getValue());</span>
+<span class="nc" id="L112">            formeCourante.setTranslateX(100);</span>
+<span class="nc" id="L113">            formeCourante.setTranslateY(100);</span>
+            
+<span class="nc" id="L115">            particulesVue.add(formeCourante);</span>
+<span class="nc" id="L116">            pane.getChildren().add(formeCourante);</span>
+<span class="nc" id="L117">        } catch (ParticuleException ex) {</span>
+<span class="nc" id="L118">            Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L119">        }  </span>
+<span class="nc" id="L120">    }</span>
+    
+    
+    
+    private void ajouteBalle(double x, double y)
+    {
+         try {
+<span class="nc" id="L127">            Particule particule = new Particule(vitesse.getValue(), angle.getValue(), rayon.getValue(), x, y, choixCouleur.getValue().toString());</span>
+<span class="nc" id="L128">            compteur++;</span>
+<span class="nc" id="L129">            nombres.setText(Integer.toString(compteur));</span>
+            
+<span class="nc" id="L131">            particules.add(particule);</span>
+            
+<span class="nc" id="L133">            Shape formeCourante = new Ellipse(rayon.getValue(), rayon.getValue());</span>
+<span class="nc" id="L134">            formeCourante.setFill(choixCouleur.getValue());</span>
+<span class="nc" id="L135">            formeCourante.setTranslateX(x);</span>
+<span class="nc" id="L136">            formeCourante.setTranslateY(y);</span>
+            
+<span class="nc" id="L138">            particulesVue.add(formeCourante);</span>
+<span class="nc" id="L139">            pane.getChildren().add(formeCourante);</span>
+<span class="nc" id="L140">        } catch (ParticuleException ex) {</span>
+<span class="nc" id="L141">            Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="nc" id="L142">        }  </span>
+<span class="nc" id="L143">    }</span>
+    
+    private void reinitialiser()
+    {
+<span class="nc" id="L147">        particules.clear();</span>
+<span class="nc" id="L148">        particulesVue.clear();</span>
+<span class="nc" id="L149">        pane.getChildren().clear();</span>
+<span class="nc" id="L150">    }</span>
+    
+    private void gereCollision()
+    {
+        
+<span class="nc" id="L155">    }</span>
+    
+    public void avancePasAvecDetection()
+    {
+        
+<span class="nc" id="L160">    }</span>
+    
+<span class="nc" id="L162">    private class TacheMouvement extends Task&lt;Void&gt;</span>
+    {
+        @Override
+        protected Void call() throws Exception {
+<span class="nc" id="L166">            throw new UnsupportedOperationException(&quot;Not supported yet.&quot;); //To change body of generated methods, choose Tools | Templates.</span>
+        }
+    }   
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+<span class="nc" id="L173">        launch(args);</span>
+<span class="nc" id="L174">    }</span>
+    
+}
+
+ 
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>
