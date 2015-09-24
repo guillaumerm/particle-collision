@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -148,7 +147,7 @@ public class Controleur extends Application implements Initializable {
             formeCourante.setTranslateY(positionY);
 
             particulesVue.add(formeCourante);
-            
+
             Platform.runLater(() -> {
                 pane.getChildren().add(formeCourante);
             });
@@ -201,7 +200,10 @@ public class Controleur extends Application implements Initializable {
                 double dy = particuleCourrante.getPosition().getY() - particule.getPosition().getY();
                 double distance = Math.sqrt(dx * dx + dy * dy);
                 if (distance < particuleCourrante.getRayon() + particule.getRayon()) {
-
+                    synchronized (flag) {
+                        particule.setPosX(Math.sqrt(particuleCourrante.getRayon() * particule.getRayon() + particuleCourrante.getRayon() * particule.getRayon()) * Math.sin(Math.toRadians(45)) + particule.getPosition().getX());
+                        particule.setPosY(Math.sqrt(particuleCourrante.getRayon() * particule.getRayon() + particuleCourrante.getRayon() * particule.getRayon()) * Math.cos(Math.toRadians(45)) + particule.getPosition().getY());
+                    }
                     Collision.AppliquerCollisionParticule(particuleCourrante, particule);
                 }
             }
