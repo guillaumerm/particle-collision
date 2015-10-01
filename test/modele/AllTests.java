@@ -14,7 +14,7 @@ import org.junit.runners.Suite;
  * @author 1141678
  */
 @RunWith(Suite.class)
-@Suite.SuiteClasses({modele.ParticuleTest.class, modele.TerrainTest.class})
+@Suite.SuiteClasses({modele.ParticuleTest.class, modele.TerrainTest.class, modele.Vector2.class})
 public class AllTests {
 
     @Before

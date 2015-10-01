@@ -1,16 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modele;
 
+import modele.exception.ParticuleException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  *
- * @author 1141678
+ * @author Guillaume Rochefort-Mathieu & Antoine Laplante
  */
 public class Particule {
     
@@ -117,24 +113,12 @@ public class Particule {
         return Math.PI * (rayon * rayon);
     }
     
-    public double getMagnitudeVitesse() {
-        return this.vitesse.magnitude();
-    }
-    
-    public Vector2 getVitesse() throws CloneNotSupportedException{
-        return vitesse.clone();
+    public Vector2 getVitesse(){
+        return vitesse;
     }
     
     public void setVitesse(Vector2 pVitesse){
         this.vitesse = pVitesse;
-    }
-    
-    public double getVitesseX() {
-        return this.vitesse.getX();
-    }
-    
-    public double getVitesseY() {
-        return this.vitesse.getY();
     }
     
     public double getAngle() {
@@ -145,15 +129,7 @@ public class Particule {
         return rayon;
     }
     
-    public Vector2 getPosition() throws CloneNotSupportedException{
-        return position.clone();
-    }
-    
-    public double getPosX() {
-        return this.position.getX();
-    }
-    
-    public double getPosY() {
-        return this.position.getY();
+    public Vector2 getPosition(){
+        return position;
     }
 }

@@ -1,15 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modele;
+
+import modele.exception.Vector2Exception;
 
 /**
  *
- * @author Gus
+ * @author Guillaume Rochefort-Mathieu & Antoine Laplante
  */
-public class Vector2 implements Cloneable {
+public class Vector2 {
 
     private double x;
     private double y;
@@ -24,19 +21,32 @@ public class Vector2 implements Cloneable {
         this.y = y;
     }
 
-    public Vector2(Vector2 v) {
-        this.x = v.x;
-        this.y = v.y;
+    public Vector2(Vector2 v) throws Vector2Exception {
+        if (v != null) {
+            this.x = v.x;
+            this.y = v.y;
+        } else {
+            throw new Vector2Exception();
+        }
+
     }
 
-    public void add(Vector2 v) {
-        this.x += v.x;
-        this.y += v.x;
+    public void add(Vector2 v) throws Vector2Exception {
+        if (v != null) {
+            this.x += v.x;
+            this.y += v.y;
+        } else {
+            throw new Vector2Exception();
+        }
     }
 
-    public void substract(Vector2 v) {
-        this.x -= v.x;
-        this.y -= v.y;
+    public void substract(Vector2 v) throws Vector2Exception {
+        if (v != null) {
+            this.x -= v.x;
+            this.y -= v.y;
+        } else {
+            throw new Vector2Exception();
+        }
     }
 
     public void multiplyScalar(double scalar) {
@@ -44,18 +54,21 @@ public class Vector2 implements Cloneable {
         this.y *= scalar;
     }
 
-    public void divideScalar(double scalar) {
-        this.x /= scalar;
-        this.y /= scalar;
+    public void divideScalar(double scalar) throws Vector2Exception {
+        if (scalar != 0) {
+            this.x /= scalar;
+            this.y /= scalar;
+        } else {
+            throw new Vector2Exception();
+        }
     }
 
     public Vector2 normalize() {
-        Vector2 normalized = new Vector2(getX() / magnitude(), getY() / magnitude());
-        return normalized;
+        return new Vector2(this.x / magnitude(), this.y / magnitude());
     }
 
     static double Dot(Vector2 v1, Vector2 v2) {
-        return v1.getX() * v2.getX() + v2.getY() * v2.getY();
+        return v1.getX() * v2.getX() + v1.getY() * v2.getY();
     }
 
     public double magnitude() {
@@ -76,13 +89,5 @@ public class Vector2 implements Cloneable {
 
     public double getY() {
         return this.y;
-    }
-    
-    public Vector2 clone()throws CloneNotSupportedException{
-        try{
-            return (Vector2) super.clone();
-        }catch(CloneNotSupportedException e){
-            throw new CloneNotSupportedException();
-        }
     }
 }

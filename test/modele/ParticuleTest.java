@@ -5,6 +5,7 @@
  */
 package modele;
 
+import modele.exception.ParticuleException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.Before;
@@ -89,11 +90,11 @@ public class ParticuleTest {
     @Test
     public void testSetMagnitudeVitesse() {
         p1.setMagnitudeVitesse(-1);
-        assertTrue(p1.getMagnitudeVitesse() == 2);
+        assertTrue(p1.getVitesse().magnitude() == 2);
         p2.setMagnitudeVitesse(0);
-        assertTrue(p2.getMagnitudeVitesse() == 0);
+        assertTrue(p2.getVitesse().magnitude() == 0);
         p3.setMagnitudeVitesse(10);
-        assertTrue(p3.getMagnitudeVitesse() == 10);
+        assertTrue(p3.getVitesse().magnitude() == 10);
     }
 
     /**
@@ -129,11 +130,11 @@ public class ParticuleTest {
     public void testSetPosX() 
     {
         p1.setPosX(-1);
-        assertTrue(p1.getPosX() == 2);
+        assertTrue(p1.getPosition().getX() == 2);
         p2.setPosX(0);
-        assertTrue(p2.getPosX() == 0);
+        assertTrue(p2.getPosition().getX() == 0);
         p3.setPosX(1);
-        assertTrue(p3.getPosX() == 1);
+        assertTrue(p3.getPosition().getX() == 1);
     }
 
     /**
@@ -143,11 +144,11 @@ public class ParticuleTest {
     public void testSetPosY() 
     {
         p1.setPosY(-1);
-        assertTrue(p1.getPosY() == 2);
+        assertTrue(p1.getPosition().getY() == 2);
         p2.setPosY(0);
-        assertTrue(p2.getPosY() == 0);
+        assertTrue(p2.getPosition().getY() == 0);
         p3.setPosY(1);
-        assertTrue(p3.getPosY() == 1);
+        assertTrue(p3.getPosition().getY() == 1);
     }
         
     /**
@@ -173,8 +174,8 @@ public class ParticuleTest {
     @Test
     public void testGetMagnitudeVitesse() 
     {
-        assertTrue(p1.getMagnitudeVitesse() == 2);
-        assertTrue(p2.getMagnitudeVitesse() == 4);
+        assertTrue(p1.getVitesse().magnitude() == 2);
+        assertTrue(p2.getVitesse().magnitude() == 4);
     }
 
     /**
@@ -203,8 +204,8 @@ public class ParticuleTest {
     @Test
     public void testGetPosX() 
     {
-        assertTrue(p1.getPosX() == 2);
-        assertTrue(p2.getPosX() == 10);
+        assertTrue(p1.getPosition().getX() == 2);
+        assertTrue(p2.getPosition().getX() == 10);
     }
 
     /**
@@ -212,8 +213,8 @@ public class ParticuleTest {
      */
     @Test
     public void testGetPosY() {
-        assertTrue(p1.getPosY() == 2);
-        assertTrue(p2.getPosY() == 30);
+        assertTrue(p1.getPosition().getY() == 2);
+        assertTrue(p2.getPosition().getY() == 30);
     }  
     
     /**

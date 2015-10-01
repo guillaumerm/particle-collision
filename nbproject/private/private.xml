@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/controleur/Controleur.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>196</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Gus/Google%20Drive/!Documents/!Climoilou/Session%205/Multimedia%20II/Travail%20Pratique/TP2_1/TP2/src/modele/Vector2.java</file>
-            <file>file:/C:/Users/Gus/Google%20Drive/!Documents/!Climoilou/Session%205/Multimedia%20II/Travail%20Pratique/TP2_1/TP2/src/controleur/Controleur.java</file>
-            <file>file:/C:/Users/Gus/Google%20Drive/!Documents/!Climoilou/Session%205/Multimedia%20II/Travail%20Pratique/TP2_1/TP2/src/modele/Collision.java</file>
-            <file>file:/C:/Users/Gus/Google%20Drive/!Documents/!Climoilou/Session%205/Multimedia%20II/Travail%20Pratique/TP2_1/TP2/src/modele/Particule.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/vue/style.css</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/ParticuleTest.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/vue/tp2.fxml</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/Vector2Exception.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Vector2.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Collision.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Particule.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/AllTests.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/TerrainException.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/ParticuleException.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/Vector2Test.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Terrain.java</file>
+            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/controleur/Controleur.java</file>
         </group>
     </open-files>
 </project-private>
