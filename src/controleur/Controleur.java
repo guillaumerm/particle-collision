@@ -2,6 +2,8 @@ package controleur;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,8 +29,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
-import modele.Collision;
+import modele.collision.Collision;
 import modele.Particule;
+import modele.Simulation;
 import modele.exception.ParticuleException;
 import modele.Terrain;
 import modele.exception.TerrainException;
@@ -54,11 +57,11 @@ public class Controleur extends Application implements Initializable {
     @FXML
     public Slider angle;
 
-    private ArrayList<Particule> particules;
     private ArrayList<Shape> particulesVue;
+    private List<Particule> particules;
     private int compteur;
     private final static long UPDATE_RATE = 60;
-    private ExecutorService executorMovement;
+    private ExecutorService executorSimulation;
     private Terrain terrain;
     private static final Object flag = new Object();
 
@@ -95,7 +98,7 @@ public class Controleur extends Application implements Initializable {
     }
 
     private void initialiseComposantesJeu() {
-        particules = new ArrayList<>();
+        particules = Collections.synchronizedList(new ArrayList<>());
         particulesVue = new ArrayList<>();
 
         try {
@@ -106,21 +109,22 @@ public class Controleur extends Application implements Initializable {
     }
 
     private void initialiseExecutor() {
-        executorMovement = Executors.newFixedThreadPool(1, (Runnable r) -> {
+        executorSimulation = Executors.newFixedThreadPool(1, (Runnable r) -> {
             Thread thread = Executors.defaultThreadFactory().newThread(r);
             thread.setDaemon(true);
             return thread;
         });
 
-        TacheMouvement tacheMovement = new TacheMouvement();
-        tacheMovement.setExecutor(executorMovement);
+        Simulation tacheSimulation = new Simulation(particules, terrain);
+        tacheSimulation.setExecutor(executorSimulation);
 
-        tacheMovement.setOnSucceeded((t) -> {
-            tacheMovement.reset();
-            tacheMovement.restart();
+        tacheSimulation.setOnSucceeded((t) -> {
+            update();
+            tacheSimulation.reset();
+            tacheSimulation.restart();
         });
 
-        tacheMovement.start();
+        tacheSimulation.start();
     }
 
     private void ajouteBalle() {
@@ -168,6 +172,7 @@ public class Controleur extends Application implements Initializable {
 
     private void ajouterParticuleSimulation(Shape particuleVue, Particule particule) {
         synchronized (flag) {
+            particules.add(particule);
             particulesVue.add(particuleVue);
             particules.add(particule);
         }
@@ -198,51 +203,20 @@ public class Controleur extends Application implements Initializable {
             }
         });
     }
-    
-    private void gereCollisionTerrain(Particule particuleCourrante, Terrain terrain){
+
+    private void gereCollisionTerrain(Particule particuleCourrante, Terrain terrain) {
         Collision.AppliquerCollisionConteneur(particuleCourrante, terrain);
     }
 
-    /**
-     *
-     */
-    private class TacheMouvement extends Service<Void> {
+    private void update() {
+        for (int i = 0; i < particules.size() - 1; i++) {
+            Particule particule = particules.get(i);
+            Shape particuleVue = particulesVue.get(i);
 
-        @Override
-        protected Task<Void> createTask() {
-            return new Task<Void>() {
-
-                @Override
-                protected Void call() throws Exception {
-
-                    for (int i = 0; i < particules.size(); i++) {
-                        final Particule particuleCourrante = particules.get(i);
-                        final Shape particuleVueCourrante = particulesVue.get(i);
-
-                        synchronized (flag) {
-                            gereCollisionParticule(particuleCourrante);
-                            gereCollisionTerrain(particuleCourrante, terrain);
-                        }
-
-                        particuleCourrante.getPosition().setX(particuleCourrante.getPosition().getX() + particuleCourrante.getVitesse().getX());
-                        particuleCourrante.getPosition().setY(particuleCourrante.getPosition().getY() + particuleCourrante.getVitesse().getY());
-
-                        Platform.runLater(() -> {
-                            particuleVueCourrante.setTranslateX(particuleCourrante.getPosition().getX());
-                            particuleVueCourrante.setTranslateY(particuleCourrante.getPosition().getY());
-                        });
-
-                    }
-
-                    try {
-                        Thread.sleep(1000 / UPDATE_RATE);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-
-                    return null;
-                }
-            };
+            Platform.runLater(() -> {
+                particuleVue.setTranslateX(particule.getPosition().getX());
+                particuleVue.setTranslateY(particule.getPosition().getY());
+            });
         }
     }
 

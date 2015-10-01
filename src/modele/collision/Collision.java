@@ -2,11 +2,14 @@
  *
  * @author Guillaume Rochefort-Mathieu & Antoine Laplante
  */
-package modele;
+package modele.collision;
 
 import modele.exception.Vector2Exception;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import modele.Particule;
+import modele.Terrain;
+import modele.Vector2;
 
 /**
  *
@@ -124,6 +127,8 @@ public class Collision {
 
         particule.getPosition().setX(newPosX + 1);
         particule.getPosition().setY(newPosY + 1);
+        
+        detecterCollisionParticule(particuleCourrante, particule);
     }
 
     /**

@@ -3,6 +3,8 @@ package modele;
 import modele.exception.ParticuleException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import modele.collision.MomentCollision;
+import modele.collision.PhysiqueCollision;
 
 /**
  *
@@ -10,11 +12,14 @@ import java.util.regex.Pattern;
  */
 public class Particule {
     
+    MomentCollision momentCollisionPlutot = new MomentCollision();
+    
     private Vector2 vitesse;
     private double angle;
     private double rayon;
     private Vector2 position;
     private String couleur;
+    private MomentCollision momentTemp = new MomentCollision();
     private static final String HEX_PATTERN_COULEUR = "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$";
     
     public Particule(double magnitudeVitesse, double angle, double rayon, double posX, double posY, String couleur) throws ParticuleException {
@@ -109,15 +114,15 @@ public class Particule {
         return couleur;
     }
     
-    public double getMass(){
+    public double getMass() {
         return Math.PI * (rayon * rayon);
     }
     
-    public Vector2 getVitesse(){
+    public Vector2 getVitesse() {
         return vitesse;
     }
     
-    public void setVitesse(Vector2 pVitesse){
+    public void setVitesse(Vector2 pVitesse) {
         this.vitesse = pVitesse;
     }
     
@@ -129,7 +134,28 @@ public class Particule {
         return rayon;
     }
     
-    public Vector2 getPosition(){
+    public Vector2 getPosition() {
         return position;
+    }
+    
+    public void intersectTerrain(Terrain terrain, double tempLimit) {
+        PhysiqueCollision.pointIntersectContourRectangular(position, vitesse, rayon, terrain, tempLimit, momentTemp);
+        if (momentTemp.temps < momentCollisionPlutot.temps) {
+            momentCollisionPlutot.copy(momentTemp);
+        }
+    }
+    
+    public void avancePas(double temps) {
+        if (momentCollisionPlutot.temps <= 1.0) {
+            this.position.setX(momentCollisionPlutot.getNewX(this.position.getX(), this.vitesse.getX()));
+            this.position.setY(momentCollisionPlutot.getNewY(this.position.getY(), this.vitesse.getY()));
+            this.vitesse.setX(momentCollisionPlutot.newVitesseX);
+            this.vitesse.setY(momentCollisionPlutot.newVitesseY);
+        } else {
+            this.position.setX(this.position.getX() + this.vitesse.getX() * temps);
+            this.position.setY(this.position.getY() + this.vitesse.getY() * temps);
+        }
+        
+        momentCollisionPlutot.reset();
     }
 }

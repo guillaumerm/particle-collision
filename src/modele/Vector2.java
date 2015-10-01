@@ -67,7 +67,7 @@ public class Vector2 {
         return new Vector2(this.x / magnitude(), this.y / magnitude());
     }
 
-    static double Dot(Vector2 v1, Vector2 v2) {
+    public static double Dot(Vector2 v1, Vector2 v2) {
         return v1.getX() * v2.getX() + v1.getY() * v2.getY();
     }
 
