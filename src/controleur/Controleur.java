@@ -65,7 +65,7 @@ public class Controleur extends Application implements Initializable {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/vue/tp2.fxml"));
-
+        
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
@@ -99,7 +99,7 @@ public class Controleur extends Application implements Initializable {
         particulesVue = new ArrayList<>();
 
         try {
-            terrain = new Terrain(0, 1000, 0, 500);
+            terrain = new Terrain(0, 1000, 0, 510);
         } catch (TerrainException ex) {
             Logger.getLogger(Controleur.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -223,9 +223,8 @@ public class Controleur extends Application implements Initializable {
                             gereCollisionParticule(particuleCourrante);
                             gereCollisionTerrain(particuleCourrante, terrain);
                         }
-
-                        particuleCourrante.getPosition().setX(particuleCourrante.getPosition().getX() + particuleCourrante.getVitesse().getX());
-                        particuleCourrante.getPosition().setY(particuleCourrante.getPosition().getY() + particuleCourrante.getVitesse().getY());
+                        
+                        particuleCourrante.avancePas();
 
                         Platform.runLater(() -> {
                             particuleVueCourrante.setTranslateX(particuleCourrante.getPosition().getX());

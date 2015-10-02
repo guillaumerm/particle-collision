@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modele;
 
 import modele.exception.Vector2Exception;
@@ -15,7 +10,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author 1141678
+ * @author Guillaume Rochefort-Mathieu & Antoine Laplante
  */
 public class Vector2Test {
 
@@ -40,6 +35,12 @@ public class Vector2Test {
         } catch (Exception e) 
         {
             
+        }
+        
+        try {
+            new Vector2(null);
+            fail("Une exception doit être levée!");
+        } catch (Exception e) {
         }
     }
 
@@ -67,10 +68,14 @@ public class Vector2Test {
             assertTrue(v1.getX() == 15);
             v2.add(v4);
             assertTrue(v2.getX() == 15);
-            v3.add(v6);
-            assertTrue(v3.getX() == 10);
         } catch (Vector2Exception ex) {
             Logger.getLogger(Vector2Test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try {
+            v3.add(v6);
+            fail("Une exception devrait être levée nous pouvons ajouter un vector null");
+        } catch (Vector2Exception ex) {
         }
 
     }
@@ -84,7 +89,7 @@ public class Vector2Test {
             v2.substract(v1);
             assertTrue(v2.getX() == 5);
             v3.substract(v4);
-            assertTrue(v2.getX() == 10);
+            assertTrue(v3.getX() == 10);
             
         } catch (Vector2Exception ex) {
             Logger.getLogger(Vector2Test.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,11 +125,15 @@ public class Vector2Test {
             assertTrue(v1.getX() == -5);
             v2.divideScalar(2);
             assertTrue(v2.getX() == 5);
-            v3.divideScalar(0);
-            assertTrue(v3.getX() == 15);
         } catch (Vector2Exception ex) {
-            Logger.getLogger(Vector2Test.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        try {
+            v3.divideScalar(0);
+            fail("Nous pouvons pas diviser par 0.");
+        } catch (Vector2Exception ex) {
+        }
+            
     }
 
     /**
@@ -133,9 +142,15 @@ public class Vector2Test {
     @Test
     public void testNormalize() 
     {
-        v1.normalize();
-        assertTrue(v1.getX() == 5/v1.magnitude());
-        assertTrue(v1.getY() == 5/v1.magnitude());
+        Vector2 v1Copy = new Vector2();
+        try {
+            v1Copy = new Vector2(v1);
+        } catch (Vector2Exception ex) {
+            Logger.getLogger(Vector2Test.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        v1 = v1.normalize();
+        assertTrue(v1.getX() == v1Copy.getX()/v1Copy.magnitude());
+        assertTrue(v1.getY() == v1Copy.getY()/v1Copy.magnitude());
     }
 
     /**
@@ -153,11 +168,11 @@ public class Vector2Test {
     @Test
     public void testSetX() {
         v1.setX(-1);
-        assertTrue(v1.getY() == -1);
+        assertTrue(v1.getX() == -1);
         v2.setX(0);
-        assertTrue(v2.getY() == 0);
+        assertTrue(v2.getX() == 0);
         v3.setX(2);
-        assertTrue(v3.getY() == 2);
+        assertTrue(v3.getX() == 2);
     }
 
     /**
@@ -196,6 +211,6 @@ public class Vector2Test {
      */
     @Test
     public void testDot() {
-        assertTrue(Dot(v1,v2) == 125);
+        assertTrue(Dot(v1,v2) == 100);
     }
 }

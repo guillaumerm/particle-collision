@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package modele;
 
 import modele.exception.ParticuleException;
@@ -14,7 +9,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author 1141678
+ * @author Guillaume Rochefort-Mathieu & Antoine Laplante
  */
 public class ParticuleTest {
     
@@ -103,7 +98,7 @@ public class ParticuleTest {
     @Test
     public void testSetAngle() {
         p1.setAngle(-1);
-        assertTrue(p1.getAngle() == 25);
+        assertTrue(p1.getAngle() == 25.0);
         p2.setAngle(10);
         assertTrue(p2.getAngle() == 10);
         p3.setAngle(361);

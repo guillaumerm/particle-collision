@@ -22,6 +22,8 @@
 .zoneDessin
 {
     -fx-background-color: #4C4330;
+    -fx-max-height:520px;
+    -fx-max-width:1000px;
 }
 //Fond d'écran des propriétés
 .propriete

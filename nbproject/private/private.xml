@@ -5,26 +5,22 @@
             <url>src/controleur/Controleur.java</url>
             <bookmark id="1">
                 <name/>
-                <line>196</line>
+                <line>201</line>
                 <key/>
             </bookmark>
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/vue/style.css</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/ParticuleTest.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/vue/tp2.fxml</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/Vector2Exception.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Vector2.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Collision.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Particule.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/AllTests.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/TerrainException.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/exception/ParticuleException.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/test/modele/Vector2Test.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/modele/Terrain.java</file>
-            <file>file:/C:/Users/1220282/Desktop/Travail%20Pratique%202/src/controleur/Controleur.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/src/vue/style.css</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/test/modele/TerrainTest.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/src/modele/Vector2.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/test/modele/CollisionTest.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/test/modele/Vector2Test.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/src/modele/Collision.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/src/controleur/Controleur.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/test/modele/ParticuleTest.java</file>
+            <file>file:/C:/Users/Gus/Documents/multimedia_tp2/test/modele/AllTests.java</file>
         </group>
     </open-files>
 </project-private>
