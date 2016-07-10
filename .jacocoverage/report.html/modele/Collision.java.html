@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Collision.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCoverage analysis of project &quot;Travail_Pratique_2&quot; (powered by JaCoCo from EclEmma)</a> &gt; <a href="index.source.html" class="el_package">modele</a> &gt; <span class="el_source">Collision.java</span></div><h1>Collision.java</h1><pre class="source lang-java linenums">/**
+ *
+ * @author Guillaume Rochefort-Mathieu &amp; Antoine Laplante
+ */
+package modele;
+
+import modele.exception.Vector2Exception;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Gus
+ */
+<span class="nc" id="L15">public class Collision {</span>
+
+    /**
+     *
+     * @param particuleCourrante
+     * @param particule
+     */
+    public static void AppliquerCollisionParticule(Particule particuleCourrante, Particule particule) {
+<span class="pc bpc" id="L23" title="1 of 2 branches missed.">        if (detecterCollisionParticule(particuleCourrante, particule)) {</span>
+<span class="fc" id="L24">            collisionParticule(particuleCourrante, particule);</span>
+            //Marge d'erreur car certainne particule font deux pas en un cela est pour réduire le nombre de clipping de particule
+<span class="fc" id="L26">            particule.avancePas();</span>
+        }
+<span class="fc" id="L28">    }</span>
+
+    /**
+     *
+     * @param pParticuleA
+     * @param pParticuleB
+     */
+    private static void collisionParticule(Particule pParticuleA, Particule pParticuleB) {
+        try {
+            //Obtenir mass combinées
+<span class="fc" id="L38">            double m1 = pParticuleA.getMass();</span>
+<span class="fc" id="L39">            double m2 = pParticuleB.getMass();</span>
+<span class="fc" id="L40">            double massCombinees = m1 + m2;</span>
+
+            // Obtien la norm du vector de collision
+<span class="fc" id="L43">            Vector2 x = new Vector2(pParticuleA.getPosition());</span>
+<span class="fc" id="L44">            x.substract(pParticuleB.getPosition());</span>
+<span class="fc" id="L45">            x = x.normalize();</span>
+
+            // Obtien le composant x du nouveau vector de vitesse de la particule A
+<span class="fc" id="L48">            Vector2 v1 = new Vector2(pParticuleA.getVitesse());</span>
+<span class="fc" id="L49">            double x1 = Vector2.Dot(x, v1);</span>
+<span class="fc" id="L50">            Vector2 v1x = new Vector2(x);</span>
+<span class="fc" id="L51">            v1x.multiplyScalar(x1);</span>
+
+            // Obtien le composant y du nouveau vector de vitesse de la particule A
+<span class="fc" id="L54">            Vector2 v1y = new Vector2(v1);</span>
+<span class="fc" id="L55">            v1y.substract(v1x);</span>
+
+            // Inverse la norm pour calculer la vitesse de la particule B
+<span class="fc" id="L58">            x.multiplyScalar(-1);</span>
+
+            // Obtien le composant x du nouveau vector de vitesse de la particule B
+<span class="fc" id="L61">            Vector2 v2 = new Vector2(pParticuleB.getVitesse());</span>
+<span class="fc" id="L62">            double x2 = Vector2.Dot(x, v2);</span>
+<span class="fc" id="L63">            Vector2 v2x = new Vector2(x);</span>
+<span class="fc" id="L64">            v2x.multiplyScalar(x2);</span>
+
+            //Obtien le composant y du nouveau vector de vitesse de la particule B
+<span class="fc" id="L67">            Vector2 v2y = new Vector2(v2);</span>
+<span class="fc" id="L68">            v2y.substract(v2x);</span>
+
+            // Calcule le nouveau vector de vitesse de la particule A avec la prise
+            // en charge du quantité du movement
+<span class="fc" id="L72">            Vector2 newVitesseA = new Vector2(v1x);</span>
+<span class="fc" id="L73">            Vector2 v2xAf = new Vector2(v2x);</span>
+<span class="fc" id="L74">            newVitesseA.multiplyScalar(((m1 - m2) / massCombinees));</span>
+<span class="fc" id="L75">            v2xAf.multiplyScalar(((2 * m2) / massCombinees));</span>
+<span class="fc" id="L76">            newVitesseA.add(v2xAf);</span>
+<span class="fc" id="L77">            newVitesseA.add(v1y);</span>
+
+            // Calcule le nouveau vector de vitesse de la particule B avec la prise
+            // en charge du quantité du movement
+<span class="fc" id="L81">            Vector2 newVitesseB = new Vector2(v1x);</span>
+<span class="fc" id="L82">            Vector2 v2xBf = new Vector2(v2x);</span>
+<span class="fc" id="L83">            newVitesseB.multiplyScalar(((2 * m1) / massCombinees));</span>
+<span class="fc" id="L84">            v2xBf.multiplyScalar(((m2 - m1) / massCombinees));</span>
+<span class="fc" id="L85">            newVitesseB.add(v2xBf);</span>
+<span class="fc" id="L86">            newVitesseB.add(v2y);</span>
+
+<span class="fc" id="L88">            pParticuleA.setVitesse(newVitesseA);</span>
+<span class="fc" id="L89">            pParticuleB.setVitesse(newVitesseB);</span>
+<span class="nc" id="L90">        } catch (Vector2Exception ex) {</span>
+<span class="nc" id="L91">            Logger.getLogger(Collision.class.getName()).log(Level.SEVERE, null, ex);</span>
+<span class="fc" id="L92">        }</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+     *
+     * @param particuleCourrante
+     * @param particule
+     * @return
+     */
+    private static boolean detecterCollisionParticule(Particule particuleCourrante, Particule particule) {
+<span class="fc" id="L102">        boolean collision = false;</span>
+<span class="pc bpc" id="L103" title="1 of 2 branches missed.">        if (enProximite(particuleCourrante, particule)) {</span>
+<span class="fc" id="L104">            double dx = particuleCourrante.getPosition().getX() - particule.getPosition().getX();</span>
+<span class="fc" id="L105">            double dy = particuleCourrante.getPosition().getY() - particule.getPosition().getY();</span>
+<span class="fc" id="L106">            double distance = Math.sqrt(dx * dx + dy * dy);</span>
+
+<span class="pc bpc" id="L108" title="1 of 2 branches missed.">            if (distance &lt;= particuleCourrante.getRayon() + particule.getRayon()) {</span>
+<span class="fc" id="L109">                repositionneParticuleCollision(particuleCourrante, particule, distance);</span>
+<span class="fc" id="L110">                collision = true;</span>
+            }
+        }
+<span class="fc" id="L113">        return collision;</span>
+    }
+
+    private static boolean enProximite(Particule particuleCourrante, Particule particule) {
+<span class="pc bpc" id="L117" title="1 of 2 branches missed.">        return particuleCourrante.getPosition().getX() + particuleCourrante.getRayon() + particule.getRayon() &gt; particule.getPosition().getX()</span>
+<span class="pc bpc" id="L118" title="1 of 2 branches missed.">                &amp;&amp; particuleCourrante.getPosition().getX() &lt; particule.getPosition().getX() + particuleCourrante.getRayon() + particule.getRayon()</span>
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">                &amp;&amp; particuleCourrante.getPosition().getY() + particuleCourrante.getRayon() + particule.getRayon() &gt; particule.getPosition().getY()</span>
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">                &amp;&amp; particuleCourrante.getPosition().getY() &lt; particule.getPosition().getY() + particuleCourrante.getRayon() + particule.getRayon();</span>
+    }
+
+    /**
+     *
+     * @param particuleCourrante
+     * @param particule
+     * @param distance
+     */
+    private static void repositionneParticuleCollision(Particule particuleCourrante, Particule particule, double distance) {
+<span class="fc" id="L130">        double delta = distance - (particuleCourrante.getRayon() + particule.getRayon());</span>
+<span class="fc" id="L131">        double angle = Math.atan(particule.getVitesse().getY() / particule.getVitesse().getX());</span>
+
+<span class="fc" id="L133">        double newPosX = particule.getPosition().getX() - (delta * Math.cos(angle));</span>
+<span class="fc" id="L134">        double newPosY = particule.getPosition().getY() - (delta * Math.sin(angle));</span>
+
+<span class="fc" id="L136">        particule.getPosition().setX(newPosX);</span>
+<span class="fc" id="L137">        particule.getPosition().setY(newPosY);</span>
+<span class="fc" id="L138">    }</span>
+
+    /**
+     *
+     * @param pParticule
+     * @param pTerrain
+     */
+    public static void AppliquerCollisionConteneur(Particule pParticule, Terrain pTerrain) {
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (pParticule.getPosition().getX() + pParticule.getVitesse().getX() &lt; pTerrain.getMinX() + pParticule.getRayon()) {</span>
+<span class="fc" id="L147">            pParticule.setPosX(pParticule.getRayon());</span>
+<span class="fc" id="L148">            pParticule.setVitesseX(-1 * pParticule.getVitesse().getX());</span>
+<span class="pc bpc" id="L149" title="1 of 2 branches missed.">        } else if (pParticule.getPosition().getX() + pParticule.getRayon() + pParticule.getVitesse().getX() &gt; pTerrain.getMaxX()) {</span>
+<span class="fc" id="L150">            pParticule.setPosX(pTerrain.getMaxX() - pParticule.getRayon());</span>
+<span class="fc" id="L151">            pParticule.setVitesseX(-1 * pParticule.getVitesse().getX());</span>
+        }
+
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        if (pParticule.getPosition().getY() + pParticule.getVitesse().getY() &lt; pTerrain.getMinY() + pParticule.getRayon()) {</span>
+<span class="fc" id="L155">            pParticule.setPosY(pParticule.getRayon());</span>
+<span class="fc" id="L156">            pParticule.setVitesseY(-1 * pParticule.getVitesse().getY());</span>
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        } else if (pParticule.getPosition().getY() + pParticule.getRayon() + pParticule.getVitesse().getY() &gt; pTerrain.getMaxY()) {</span>
+<span class="fc" id="L158">            pParticule.setPosY(pTerrain.getMaxY() - pParticule.getRayon());</span>
+<span class="fc" id="L159">            pParticule.setVitesseY(-1 * pParticule.getVitesse().getY());</span>
+        }
+<span class="fc" id="L161">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.5.201505241946</span></div></body></html>

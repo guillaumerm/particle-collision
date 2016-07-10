@@ -1,0 +1,35 @@
+/* 
+    Created on : 2015-09-30
+    Author     : Guillaume Rochefort-Mathieu & Antoine Laplante
+*/
+//Fond d'écran des boutons
+.down
+{
+    -fx-background-color: #D4B16A;
+}
+//Style des boutons
+.bouton
+{
+    -fx-background-color: #FFE3AA;
+    -fx-background-radius: 10;
+}
+//Effet sur les boutons
+.bouton:hover
+{
+    -fx-background-color: linear-gradient(#805f1c, #D4AD5F);
+}
+//Fond d'écran zone dessin
+.zoneDessin
+{
+    -fx-background-color: #4C4330;
+    -fx-max-height:520px;
+    -fx-max-width:1000px;
+}
+//Fond d'écran des propriétés
+.propriete
+{
+    -fx-background-color: #D4B16A;
+    -fx-hgap: 30;
+    -fx-vgap: 5;
+    -fx-padding: 0 0 0 20;
+}
